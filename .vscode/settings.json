@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "sysclock.h": "c",
+        "systimer.h": "c",
+        "stm32l476xx.h": "c",
+        "crc.h": "c",
+        "uart.h": "c"
+    }
+}
