@@ -1,4 +1,3 @@
-
 #include "UART.h"
 
 void UART1_Init(void) {
