@@ -77,7 +77,7 @@ int main(void) {
 		printf("%d \n", time);
 
 		// 12. Delay 1 second
-		delay(1000000);
+		delay(1000);
 	}
 	
   while (1); 

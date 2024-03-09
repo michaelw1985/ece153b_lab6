@@ -1326,11 +1326,11 @@ Image component sizes
        140         48        392          0       1536        884   startup_stm32l476xx.o
        466          0          0          0          0       2101   sysclock.o
        376          0          0          0          4       4501   systimer.o
-       462          0          0          0          0       3130   uart.o
+       462          0          0          0          0       3128   uart.o
         38          0          0          0         84       1552   uart_printf.o
 
     ----------------------------------------------------------------------
-      1904         48       2480          4       1636      17930   Object Totals
+      1904         48       2480          4       1636      17928   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         22          0          3          0          8          0   (incl. Padding)
 
@@ -1440,8 +1440,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      8796        320       3032          4       1732      20002   Grand Totals
-      8796        320       3032          4       1732      20002   ELF Image Totals
+      8796        320       3032          4       1732      20000   Grand Totals
+      8796        320       3032          4       1732      20000   ELF Image Totals
       8796        320       3032          4          0          0   ROM Totals
 
 ==============================================================================
