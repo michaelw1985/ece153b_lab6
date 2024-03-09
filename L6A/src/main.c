@@ -26,24 +26,25 @@ int main(void) {
 	// TODO initialize modules
 	SysTick_Init();
 	LED_Init();
+	UART2_GPIO_Init();
 	UART2_Init();
+	USART_Init(USART2);
+	printf("connected");
 	
 	while(1) {
 		LED_Toggle();
 		startTimer();
-		uint32_t CRCinitial = 0xFFFFFFFF;
+		Software_ComputedCRC = INITIAL_CRC_VALUE;
 		// compute CRC
-		for (x in DataBuffer) {
-			CrcSoftwareFunc(CRCinitial, x, 0x04C11DB7);
-			//these lines below were og outside the for loop
-			uint32_t time = endTimer();
-			if (value == uwExpectedCRCValue) {
-				LED_Toggle();
-				exit;
-			}
-			printf("%u", time);
-			delay(1000);
+		for (int i=0; i < 512; i++) {
+			Software_ComputedCRC = CrcSoftwareFunc(Software_ComputedCRC, DataBuffer[i], POLYNOME);			
 		}
-		
+		uint32_t time = endTimer();
+		if (Software_ComputedCRC != uwExpectedCRCValue) {
+			LED_Off();
+			break;
+		}
+		printf("%d \n", time);
+		delay(1000);
 	}
 }

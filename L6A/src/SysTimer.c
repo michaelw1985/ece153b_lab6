@@ -23,6 +23,7 @@ void SysTick_Init(void) {
 	// If CLKSOURCE = 0, the external clock is used. The frequency of SysTick clock is the frequency of the AHB clock divided by 8.
 	// If CLKSOURCE = 1, the processor clock is used.
 	// TODO
+	SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk;
 	
 	// Configure and Enable SysTick interrupt in NVIC
 	NVIC_EnableIRQ(SysTick_IRQn);
@@ -30,24 +31,24 @@ void SysTick_Init(void) {
 }
 
 void SysTick_Handler(void){
-	++msTicks;
+	++step;
 }
 
-void delay (uint32_t T){
+void delay (uint32_t ms){
 	// a) Reset the counter
-	SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
+	step = 0;
 
 	// b) Reset VAL to 0 for SysTick
 	SysTick->VAL = 0;
 
-	// c) Set LOAD to a desirable value for SysTick (ARR = 1ms/T_clk - 1)
-	SysTick->LOAD = 79999; 
+	// c) Set LOAD to a desirable value for SysTick (ARR = 1us/T_clk - 1)
+	SysTick->LOAD = 79; 
 
 	// d) enable SysTick
 	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
 
 	// e) busy waiting for counter to reach desired value
-	while (!(SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk));
+	while (step < ms);
 
 	// f) disable SysTick for future use.
 	SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
@@ -62,7 +63,7 @@ void startTimer(void) {
 	SysTick->VAL = 0;
 
 	// iii. Set LOAD to a desirable value for SysTick
-	SysTick->LOAD = 79999; 
+	SysTick->LOAD = 79; 
 
 	// iv. Enable SysTick to start timing
 	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
@@ -76,10 +77,9 @@ uint32_t endTimer(void) {
 
 	// ii. Read the values from VAL and the counter
 	uint32_t VALvalue = SysTick->VAL;
-	uint32_t counterValue = step;
-
+	
 	// iii. Calculate the time using both numbers
-	uint32_t timeDiff = (1/80000)*(counterValue + (1/80000)VALvalue); // in seconds
+	//uint32_t timeDiff = 1000*(1/80000)*(counterValue + (1/80000)*VALvalue); // in miliseconds
 
-	return timeDiff;//TODO
+	return step;//TODO
 }

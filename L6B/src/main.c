@@ -33,15 +33,22 @@ int main(void) {
 	while(1) {
 		// toggle LED
 		LED_Toggle();
-		// Compute the CRC of DataBuffer
 		// start timer
+		startTimer();
 		// reset CRC
+		CRC->CR = CRC_CR_RESET;
 		// compute CRC
+		ComputedCRC = CRC_CalcBlockCRC((uint32_t *)DataBuffer, BUFFER_SIZE);
 		// stop timer
+		time = endTimer();
 		// if CRC doesn't match expected CRC, turn LED off, break
+		if (ComputedCRC != uwExpectedCRCValue) { //ComputedCRC was og "value"
+			LED_Off();
+			break;
+		}
 		// print time to compute
+		printf("%d \n", time);
 		// delay 1 second
+		delay(1000);
 	}
 }
-
-
